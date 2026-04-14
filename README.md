@@ -31,7 +31,7 @@ error_user: Não descobri
 
 visual_user: Os preços mudam a cada refresh de página
 
-### Comandos disponíveis
+### 3. Executar
 
 ```python main.py``` >	Executa normalmente (com navegador visível)
 
