@@ -18,7 +18,7 @@ def process_data(all_items):
         item_price = float(item['preco'].replace('$', ''))
         item_name = item['nome']
 
-        if item_price >= 20:
+        if item_price > 20:
             discount = item_price * 0.1
             discounted_price = round(item_price - discount, 2)
             names.append(item_name)
