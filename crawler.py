@@ -23,7 +23,7 @@ class SauceDemoClient:
         self.browser = getattr(self.playwright, self.browser_type).launch(headless=self.headless)
         self.page = self.browser.new_page()
 
-        self.page.goto("https://www.saucedemo.com/")
+        self.page.goto(os.getenv("URL"))
         self.page.fill('[data-test="username"]', usuario)
         self.page.fill('[data-test="password"]', senha)
         self.page.click('[data-test="login-button"]')
