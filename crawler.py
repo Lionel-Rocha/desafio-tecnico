@@ -1,7 +1,7 @@
 import os
 from playwright.sync_api import sync_playwright
 from dotenv import load_dotenv
-
+from logs import logger
 # 0. FAZER LOGIN!!!
 # 1. pegar o item do site
 # Vamos separar "login" de "pegar os itens".
@@ -31,12 +31,10 @@ class SauceDemoClient:
         try:
             self.page.wait_for_selector('[data-test="inventory-item"]', timeout=5000)
             self.logado = True
-            # TODO: Vai para LOG
-            print(f"Login realizado com sucesso como {usuario}")
+            logger.success(f"Login realizado com sucesso como {usuario}")
             return True
         except Exception as e:
-            # TODO: Vai para LOG
-            print(f"Falha no login. Detalhes: {e}")
+            logger.error(f"Falha no login. Detalhes: {e}")
             return False
 
     def get_all_items(self):
@@ -51,8 +49,7 @@ class SauceDemoClient:
                                                }))"""
                                                )
 
-        # TODO: Itens vão para LOG
-        print(f"{len(itens)} itens encontrados")
+        logger.info(f"{len(itens)} itens encontrados")
         return itens
 
     def close_playwright(self):
@@ -60,8 +57,7 @@ class SauceDemoClient:
             self.browser.close()
         if self.playwright:
             self.playwright.stop()
-        # TODO: colocar isso em logs
-        print("Conexão fechada")
+        logger.success("Conexão fechada")
 
 
 def crawler_main():

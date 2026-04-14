@@ -1,4 +1,5 @@
 import pandas
+from logs import logger
 """
 Vou comentar com sinceridade: se fosse um projeto grande,
 eu separaria a responsabilidade de colocar os dados no dataframe
@@ -24,6 +25,7 @@ def process_data(all_items):
         precos.append(item_price)
         precos_com_desconto.append(discounted_price)
 
+    logger.success("Dados processados com sucesso.")
     return [nomes, precos, precos_com_desconto]
 
 
@@ -36,15 +38,13 @@ def wraps_dataframe(nomes, precos, precos_com_desconto):
         })
 
         dataframe.to_excel("arquivo.xlsx", index=False)
-        print("Arquivo salvo com sucesso!")
+        logger.success("Arquivo salvo!")
     except Exception as e:
-        # TODO: ir para logs
-        print("Houve um erro no salvamento do arquivo: ", e)
+        logger.error("Houve um erro no salvamento do arquivo: ", e)
 
 def processing_main(all_items):
     try:
         [names, prices, discounted_prices] = process_data(all_items)
         wraps_dataframe(names, prices, discounted_prices)
     except Exception:
-        # TODO: ir para logs
-        print("Houve um erro no processamento dos dados.")
+        logger.error("Houve um erro no processamento dos dados.")
