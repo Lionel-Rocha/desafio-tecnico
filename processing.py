@@ -29,7 +29,7 @@ def process_data(all_items):
     return [names, prices, discounted_prices]
 
 
-def wraps_dataframe(names, prices, discounted_prices):
+def wraps_dataframe(names, prices, discounted_prices, output_file="produtos.xlsx"):
     try:
         dataframe = pandas.DataFrame({
             "Nome": names,
@@ -37,14 +37,18 @@ def wraps_dataframe(names, prices, discounted_prices):
             "Preco com desconto": discounted_prices
         })
 
-        dataframe.to_excel("arquivo.xlsx", index=False)
+        # É bom garantir que o arquivo virá na extensão correta
+        if not output_file.endswith('.xlsx'):
+            output_file = output_file + '.xlsx'
+
+        dataframe.to_excel(output_file, index=False)
         logger.success("Arquivo salvo!")
     except Exception as e:
         logger.error(f"Houve um erro no salvamento do arquivo: {e}")
 
-def processing_main(all_items):
+def processing_main(all_items, output_file="produtos.xlsx"):
     try:
         [names, prices, discounted_prices] = process_data(all_items)
-        wraps_dataframe(names, prices, discounted_prices)
+        wraps_dataframe(names, prices, discounted_prices, output_file)
     except Exception:
         logger.error("Houve um erro no processamento dos dados.")

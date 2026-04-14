@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 from logs import logger
 
 load_dotenv()
-
+TIMEOUT = 10000
 
 class SauceDemoClient:
     def __init__(self, browser_type="chromium", headless=True):
@@ -18,6 +18,7 @@ class SauceDemoClient:
         self.playwright = None
         self.browser = None
         self.page = None
+        self.timeout = TIMEOUT
 
     def login(self, usuario=os.getenv("USUARIO"), senha=os.getenv("SENHA")):
         self.playwright = sync_playwright().start()
@@ -28,18 +29,24 @@ class SauceDemoClient:
         self.page.fill('[data-test="username"]', usuario)
         self.page.fill('[data-test="password"]', senha)
 
-        with self.page.expect_navigation():
-            self.page.click('[data-test="login-button"]')
+        self.page.click('[data-test="login-button"]')
 
-        try:
-            self.page.wait_for_url("**/inventory.html", timeout=5000)
+        # Aguarda um pouco para a página reagir (mensagem de erro ou navegação).
+        self.page.wait_for_timeout(3000)
+
+        erro_element = self.page.query_selector('[data-test="error"]')
+        if erro_element:
+            mensagem_erro = erro_element.inner_text()
+            logger.error(f"Falha no login: {mensagem_erro}")
+            return False
+
+        if "/inventory.html" in self.page.url:
             self.logado = True
             logger.success(f"Login realizado com sucesso como {usuario}")
             return True
 
-        except Exception as e:
-            logger.error(f"Falha no login: {e}")
-            return False
+        logger.error(f"Falha no login para '{usuario}' - motivo desconhecido")
+        return False
 
     def get_all_items(self):
         if not self.logado:
@@ -75,8 +82,8 @@ class SauceDemoClient:
         logger.success("Conexão fechada")
 
 
-def crawler_main():
-    client = SauceDemoClient(headless=True)
+def crawler_main(headless=True):
+    client = SauceDemoClient(headless=headless)
     client.login()
     all_items = client.get_all_items()
     client.close_playwright()
