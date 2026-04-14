@@ -21,12 +21,9 @@ def process_data(all_items):
         if item_price >= 20:
             discount = item_price * 0.1
             discounted_price = round(item_price - discount, 2)
-        else:
-            discounted_price = None
-
-        names.append(item_name)
-        prices.append(item_price)
-        discounted_prices.append(discounted_price)
+            names.append(item_name)
+            prices.append(item_price)
+            discounted_prices.append(discounted_price)
 
     logger.success("Dados processados com sucesso.")
     return [names, prices, discounted_prices]
