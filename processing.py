@@ -40,7 +40,7 @@ def wraps_dataframe(names, prices, discounted_prices):
         dataframe.to_excel("arquivo.xlsx", index=False)
         logger.success("Arquivo salvo!")
     except Exception as e:
-        logger.error("Houve um erro no salvamento do arquivo: ", e)
+        logger.error(f"Houve um erro no salvamento do arquivo: {e}")
 
 def processing_main(all_items):
     try:
