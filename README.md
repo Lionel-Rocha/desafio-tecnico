@@ -1,3 +1,6 @@
+> [!WARNING]
+> Só produtos acima de $20 entram na lista (e ganham 10% de desconto)
+
 ## Como usar
 
 ### 1. Instalar as dependências
@@ -10,10 +13,11 @@ pip install -r requirements.txt
 Crie um arquivo .env na raiz do projeto:
 
 ```env
-USUARIO=standard_user
+USUARIO=tipo_de_usuario
 SENHA=secret_sauce
 URL=https://www.saucedemo.com/
 ```
+#### Tipos de usuário
 
 standard_user: Usuário OK
 
@@ -37,4 +41,3 @@ visual_user: Os preços mudam a cada refresh de página
 
 ```python main.py --headless --output relatorio``` >   Todas as anteriores. O arquivo vai salvar com uma extensão .xlsx 
 
-[!Warning] Só produtos acima de $20 entram na lista (e ganham 10% de desconto)
