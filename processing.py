@@ -7,11 +7,14 @@ da de processá-los. Mas é um desafio relativamente pequeno, então,
 eu vou colocar tudo em um lugar só para evitar over-engineering.
 """
 def process_data(all_items):
-    nomes = []
-    precos = []
-    precos_com_desconto = []
+    names = []
+    prices = []
+    discounted_prices = []
 
     for item in all_items:
+
+        logger.info(f"Processando item {item['nome']}")
+
         item_price = float(item['preco'].replace('$', ''))
         item_name = item['nome']
 
@@ -21,20 +24,20 @@ def process_data(all_items):
         else:
             discounted_price = None
 
-        nomes.append(item_name)
-        precos.append(item_price)
-        precos_com_desconto.append(discounted_price)
+        names.append(item_name)
+        prices.append(item_price)
+        discounted_prices.append(discounted_price)
 
     logger.success("Dados processados com sucesso.")
-    return [nomes, precos, precos_com_desconto]
+    return [names, prices, discounted_prices]
 
 
-def wraps_dataframe(nomes, precos, precos_com_desconto):
+def wraps_dataframe(names, prices, discounted_prices):
     try:
         dataframe = pandas.DataFrame({
-            "Nome": nomes,
-            "Preco": precos,
-            "Preco com desconto": precos_com_desconto
+            "Nome": names,
+            "Preco": prices,
+            "Preco com desconto": discounted_prices
         })
 
         dataframe.to_excel("arquivo.xlsx", index=False)

@@ -29,7 +29,7 @@ class SauceDemoClient:
         self.page.click('[data-test="login-button"]')
 
         try:
-            self.page.wait_for_selector('[data-test="inventory-item"]', timeout=5000)
+            self.page.wait_for_url("**/inventory.html", timeout=5000)
             self.logado = True
             logger.success(f"Login realizado com sucesso como {usuario}")
             return True
