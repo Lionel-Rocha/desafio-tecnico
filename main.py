@@ -1,5 +1,5 @@
 import crawler
-
+import processing
 
 def main():
     # 0. FAZER LOGIN!!!
@@ -9,6 +9,7 @@ def main():
     # 4. após todos os itens serem processados, colocar o dataframe pra xlsx
     print("Comando iniciado.")
     all_items = crawler.crawler_main()
+    processing.processing_main(all_items)
     print("Comando finalizado.")
 
 

@@ -47,9 +47,7 @@ class SauceDemoClient:
         itens = self.page.eval_on_selector_all('[data-test="inventory-item"]',
                                                """elementos => elementos.map(el => ({
                                                    nome: el.querySelector('[data-test="inventory-item-name"]')?.innerText || '',
-                                                   preco: el.querySelector('[data-test="inventory-item-price"]')?.innerText || '',
-                                                   descricao: el.querySelector('[data-test="inventory-item-desc"]')?.innerText || '',
-                                                   botao: el.querySelector('button')?.innerText || ''
+                                                   preco: el.querySelector('[data-test="inventory-item-price"]')?.innerText || ''
                                                }))"""
                                                )
 
